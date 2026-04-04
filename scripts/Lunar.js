@@ -24,7 +24,7 @@ async function getLunar() {
                     throw new Error('HTTP 状态码不符合预期: ' + response.status);
                 }
                 const jsonContent = await response.json();
-                if (typeof jsonContent?.data?.['农历'] !== 'string') {
+                if (typeof jsonContent?.['农历'] !== 'string') {
                     throw new Error('服务器返回数据格式异常');
                 }
                 lunarCache = jsonContent;
