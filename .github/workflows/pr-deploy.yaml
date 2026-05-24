@@ -1,0 +1,78 @@
+name: Pull Request Deploy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            pages deploy --project-name=win12-online --branch=pr-preview/${{ github.event.pull_request.number }} --commit-hash=${{ github.event.pull_request.head.sha }}
+      - name: Post comment
+        if: ${{ steps.deploy.outputs.deploy_url != '' }}
+        uses: actions/github-script@v9
+        with:
+          script: |
+            // Check if there is already a comment
+            let commentId = null;
+            await github.paginate(
+              'GET /repos/{owner}/{repo}/issues/{issue_number}/comments',
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ github.event.pull_request.number }},
+              },
+              (response) => {
+                for (const comment of response) {
+                  if (
+                      comment.user.login === 'github-actions[bot]' &&
+                      comment.body.includes('<!-- Deploy Bot Comment -->')) {
+                    commentId = comment.id;
+                    return true;
+                  }
+                }
+                return false;
+              }
+            );
+
+            console.log('commentId: ', commentId);
+            const comment = `
+            <!-- Deploy Bot Comment -->
+            ## ⚡ 已自动部署到 Cloudflare Pages
+
+            预览地址: <${{ steps.deploy.outputs.deploy_url }}>
+            提交hash: ${{ github.event.pull_request.head.sha }}
+
+            PR 更新时会自动进行部署并更新此评论
+
+            ###### 本评论由 GitHub Actions 工作流自动生成~
+            `;
+            console.log('comment: ', comment);
+
+            if (!commentId) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ github.event.pull_request.number }},
+                body: comment,
+              });
+            }
+            else {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: commentId,
+                body: comment,
+              });
+            }
+
