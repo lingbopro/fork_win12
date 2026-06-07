@@ -19,7 +19,7 @@ jobs:
           command: |
             pages deploy . --project-name=win12-online --branch=pr-preview/${{ github.event.pull_request.number }} --commit-hash=${{ github.event.pull_request.head.sha }}
       - name: Post comment
-        if: ${{ steps.deploy.outputs.deploy_url != '' }}
+        if: ${{ steps.deploy.outputs.deployment-url != '' }}
         uses: actions/github-script@v9
         with:
           script: |
