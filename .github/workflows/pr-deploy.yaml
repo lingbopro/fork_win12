@@ -52,7 +52,7 @@ jobs:
             <!-- Deploy Bot Comment -->
             ## ⚡ 已自动部署到 Cloudflare Pages
 
-            预览地址: <${{ steps.deploy.outputs.deploy_url }}>
+            预览地址: <${{ steps.deploy.outputs.deployment-url }}>
             提交hash: ${{ github.event.pull_request.head.sha }}
 
             PR 更新时会自动进行部署并更新此评论
