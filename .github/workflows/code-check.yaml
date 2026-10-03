@@ -15,14 +15,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Setup Prettier
+        run: npm install -g prettier
       - name: Run Prettier
-        id: prettier-run
-        uses: rutajdash/prettier-cli-action@v1.0.2
-        with:
-          config_path: ./.prettierrc
-      - name: Prettier Output
-        if: ${{ failure() }}
-        shell: bash
-        run: |
-          echo "The following files are not formatted:"
-          echo "${{steps.prettier-run.outputs.prettier_output}}"
+        run: prettier -c .
