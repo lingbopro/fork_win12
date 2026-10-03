@@ -21,7 +21,8 @@
 5. 再[创建一个 Pull Request](https://github.com/win12-online/win12/pulls)。
 
 6. 然后`坐和放宽`，等待其他人对你的代码进行审查。
->[!TIP]
+
+> [!TIP]
 > 在此过程中请尽量使用 Git 命令行、代码编辑器（例如 Visual Studio Code）内置的 Git 功能、Github Desktop、[https://github.dev](https://github.dev/win12-online/win12)等方式进行提交。
 
 ## 重要提醒
