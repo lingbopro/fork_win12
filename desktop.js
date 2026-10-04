@@ -3,11 +3,11 @@
 /*
 
 Win12 网页版
-    codenerg.org/win12-online/win12
+    github.com/win12-online/win12
 
 */
 
-/********** 禁止格式化此文档！ **********/
+// 请使用 Prettier 格式化此文档
 
 console.log(
   '%cWindows 12 网页版 (GitHub: win12-online/win12)',
