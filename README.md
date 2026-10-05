@@ -180,7 +180,8 @@ Win12 Online 中部分独立创作的媒体文件内容（图形作品、美术�
 
 - [状态监测](https://status.win12.tech/status/win12)
 - [主题仓库](https://github.com/win12-online/win12-theme)
-- [Wiki 仓库](https://github.com/lingbopro/win12-wiki)
+- [Wiki 仓库 (@lingbopro 维护)](https://github.com/lingbopro/win12-wiki)
+- [Wiki 仓库 (@freedom-323 维护)](https://github.com/freedom-323/win12-wiki)
 - [桌面版仓库](https://github.com/win12-online/win12-desktop)
 
 ## 贡献者
